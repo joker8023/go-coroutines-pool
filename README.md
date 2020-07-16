@@ -17,8 +17,18 @@ requires the following to run:
 ## Usage
 
 ```
-   cp import "github.com/joker8023/go-coroutines-pool"
-   pool := cp.New(3)
+   package main
+
+import (
+	"log"
+	"runtime"
+	"time"
+
+	pool "github.com/joker8023/go-coroutines-pool"
+)
+
+func main() {
+	pool := pool.New(3)
 	log.Println(runtime.NumGoroutine())
 	for i := 0; i < 10; i++ {
 		pool.Add(1)
@@ -30,6 +40,8 @@ requires the following to run:
 	}
 	pool.Wait()
 	log.Println(runtime.NumGoroutine())
+}
+
 ```
 
 Build

@@ -9,6 +9,7 @@ type pool struct {
 	wg    *sync.WaitGroup
 }
 
+// new pool, size is its maximum
 func New(size int) *pool {
 	if size <= 0 {
 		size = 1
@@ -19,6 +20,7 @@ func New(size int) *pool {
 	}
 }
 
+// Use coroutine, delta is the amount used
 func (p *pool) Add(delta int) {
 	for i := 0; i < delta; i++ {
 		p.queue <- 1
@@ -29,11 +31,13 @@ func (p *pool) Add(delta int) {
 	p.wg.Add(delta)
 }
 
+// one Coroutines complete
 func (p *pool) Done() {
 	<-p.queue
 	p.wg.Done()
 }
 
+//Wait for all coroutines to complete
 func (p *pool) Wait() {
 	p.wg.Wait()
 }
